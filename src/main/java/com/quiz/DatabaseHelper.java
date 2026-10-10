@@ -114,4 +114,27 @@ public class DatabaseHelper {
             System.out.println("Error loading history: " + e.getMessage());
         }
     }
+
+    // Returns past quiz scores as an ArrayList for the Swing GUI
+    public ArrayList<QuizResult> getHistory(String username) {
+        ArrayList<QuizResult> list = new ArrayList<QuizResult>();
+        String sql = "SELECT score, total_questions, date_taken FROM quiz_results "
+                + "WHERE username = ? ORDER BY date_taken DESC";
+        try {
+            Connection con = DBConnection.getConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int score = rs.getInt("score");
+                int total = rs.getInt("total_questions");
+                String date = String.valueOf(rs.getTimestamp("date_taken"));
+                list.add(new QuizResult(username, score, total, date));
+            }
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error loading history: " + e.getMessage());
+        }
+        return list;
+    }
 }

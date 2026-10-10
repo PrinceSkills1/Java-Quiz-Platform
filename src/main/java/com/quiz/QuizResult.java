@@ -6,10 +6,19 @@ public class QuizResult {
     private int score;
     private int total;
 
+    private String date;
+
     public QuizResult(String user, int score, int total) {
         this.user = user;
         this.score = score;
         this.total = total;
+    }
+
+    public QuizResult(String user, int score, int total, String date) {
+        this.user = user;
+        this.score = score;
+        this.total = total;
+        this.date = date;
     }
 
     public String getUser() { return user; }
@@ -20,4 +29,7 @@ public class QuizResult {
 
     public int getTotal() { return total; }
     public void setTotal(int total) { this.total = total; }
+
+    public String getDate() { return date; }
+    public void setDate(String date) { this.date = date; }
 }
